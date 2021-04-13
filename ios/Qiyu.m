@@ -24,28 +24,9 @@
 
 RCT_EXPORT_MODULE()
 
-// Example method
-// See // https://facebook.github.io/react-native/docs/native-modules-ios
-RCT_REMAP_METHOD(multiply,
-                 multiplyWithA:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
-{
-  NSNumber *result = @([a floatValue] * [b floatValue]);
-
-  resolve(result);
-}
-
-RCT_EXPORT_METHOD(toast:(NSString*)toast) {
-    NSLog(@"%@", toast);
-}
-
-RCT_EXPORT_METHOD(registerAppId:(nonnull NSString *)appKey appName:(nonnull NSString *)appName callback:(RCTResponseSenderBlock)callback) {
++ (void)init:(NSString *)appKey appName:(NSString *)appName{
     if (appKey && appName) {
         [[QYSDK sharedSDK] registerAppId:appKey appName:appName];
-    }
-    if (callback) {
-        callback(@"1");
     }
 }
 
@@ -141,9 +122,9 @@ RCT_EXPORT_METHOD(setCustomUIConfig:(nonnull NSDictionary*)paramDict) {
     if ([paramDict objectForKey:@"bottomMargin"]) {
         [[QYSDK sharedSDK] customUIConfig].bottomMargin = [RCTConvert CGFloat:[paramDict objectForKey:@"bottomMargin"]];
     }
-//    if ([paramDict objectForKey:@"showCloseSessionEntry"]) {
-//        [[QYSDK sharedSDK] customUIConfig].showCloseSessionEntry = [RCTConvert BOOL:[paramDict objectForKey:@"showCloseSessionEntry"]];
-//    }
+    //    if ([paramDict objectForKey:@"showCloseSessionEntry"]) {
+    //        [[QYSDK sharedSDK] customUIConfig].showCloseSessionEntry = [RCTConvert BOOL:[paramDict objectForKey:@"showCloseSessionEntry"]];
+    //    }
 }
 
 RCT_EXPORT_METHOD(setUrlClickWithEventName:(NSString*)EventName) {
@@ -227,8 +208,8 @@ RCT_EXPORT_METHOD(openServiceWindow:(nonnull NSDictionary*)paramDict){
         if (self.naviTitleColor) {
             nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
         }
-//        nav.navigationBar.barTintColor = [UIColor whiteColor];
-//        nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
+        //        nav.navigationBar.barTintColor = [UIColor whiteColor];
+        //        nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
     });
 }
@@ -352,15 +333,15 @@ RCT_EXPORT_METHOD(cleanCache) {
             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
             self.sessionVC = nil;
         });
-//        [[[QYSDK sharedSDK] customActionConfig] showQuitWaiting:^(QuitWaitingType quitType) {
-//            if (quitType != QuitWaitingTypeCancel) {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
-//                    self.sessionVC = nil;
-//                });
-//            }
-//        }];
-
+        //        [[[QYSDK sharedSDK] customActionConfig] showQuitWaiting:^(QuitWaitingType quitType) {
+        //            if (quitType != QuitWaitingTypeCancel) {
+        //                dispatch_async(dispatch_get_main_queue(), ^{
+        //                    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+        //                    self.sessionVC = nil;
+        //                });
+        //            }
+        //        }];
+        
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
@@ -400,17 +381,17 @@ RCT_EXPORT_METHOD(cleanCache) {
             color = @"0xFF";
             color = [color stringByAppendingString:[colorString substringFromIndex:1]];
             argb = [[NSNumber alloc] initWithUnsignedLong:strtol([color UTF8String], 0, 16)];
-
+            
             return [RCTConvert UIColor:argb];
         }else if (colorString.length == 9) {
             color = @"0x";
             color = [color stringByAppendingString:[colorString substringFromIndex:1]];
             argb = [[NSNumber alloc] initWithUnsignedLong:strtol([color UTF8String], 0, 16)];
-
+            
             return [RCTConvert UIColor:argb];
         }
     }
-
+    
     return nil;
 }
 
@@ -419,18 +400,18 @@ RCT_EXPORT_METHOD(cleanCache) {
     NSRange range = [imageFilePath rangeOfString:@"http"];
     NSString *substring = [imageFilePath substringFromIndex:NSMaxRange(range)];
     if(substring.length >0){
-      return imageFilePath;
+        return imageFilePath;
     }
-
+    
     NSString *localImagePath = [imageFilePath substringFromIndex:1];
     NSString *bundlePath = [NSBundle mainBundle].bundlePath;
     bundlePath = [[bundlePath stringByAppendingPathComponent:@"assets"] stringByAppendingPathComponent:localImagePath];
-
+    
     UIImage *image = [[UIImage imageWithContentsOfFile:bundlePath] resizableImageWithCapInsets:UIEdgeInsetsMake(15,15,30,30) resizingMode:UIImageResizingModeStretch];
     if (image) {
         return image;
     }
-
+    
     return nil;
 }
 

@@ -4,4 +4,6 @@
 
 @interface Qiyu : RCTViewManager
 
++ (void)init:(NSString *)appKey appName:(NSString *)appName;
+
 @end
