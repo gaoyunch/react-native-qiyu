@@ -194,14 +194,29 @@ RCT_EXPORT_METHOD(setUserInfo:(nonnull NSDictionary*)paramDict callback:(RCTResp
         callback(@[@"1"]);
     }}
 
+
 RCT_EXPORT_METHOD(openServiceWindow:(nonnull NSDictionary*)paramDict){
     dispatch_async(dispatch_get_main_queue(), ^{
+        UIColor *backColor;
+        if (@available(iOS 13.0, *)) {
+            backColor= [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
+                if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
+                    return [UIColor blackColor];
+                }
+                else {
+                    return [UIColor whiteColor];
+                }
+            }];
+        } else {
+            // Fallback on earlier versions
+        }
+        
         QYSessionViewController *sessionVC = [[QYSDK sharedSDK] sessionViewController];
         self.sessionVC = sessionVC;
         [self setSessionVC:sessionVC paramDict:paramDict];
         sessionVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"return"] style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
         UIBarButtonItem * leftBarButtonItem  =  [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-        [leftBarButtonItem setTintColor:[UIColor whiteColor]];
+        [leftBarButtonItem setTintColor:backColor];
         sessionVC.navigationItem.leftBarButtonItem =leftBarButtonItem;
         sessionVC.hidesBottomBarWhenPushed = YES;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sessionVC];
@@ -212,6 +227,8 @@ RCT_EXPORT_METHOD(openServiceWindow:(nonnull NSDictionary*)paramDict){
         if (self.naviTitleColor) {
             nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
         }
+//        nav.navigationBar.barTintColor = [UIColor whiteColor];
+//        nav.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
     });
 }
