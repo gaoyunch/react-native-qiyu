@@ -1,6 +1,6 @@
 {
-  "name": "@kafudev/react-native-qiyu",
-  "version": "0.1.43",
+  "name": "@gaoyunch/react-native-qiyu",
+  "version": "1.0.1",
   "description": "react-native netease qiyu sdk",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -39,9 +39,9 @@
   "author": "kafudev <kafudev@sina.com> (https://github.com/kafudev)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kafudev/react-native-qiyu/issues"
+    "url": "https://github.com/gaoyunch/react-native-qiyu/issues"
   },
-  "homepage": "https://github.com/kafudev/react-native-qiyu#readme",
+  "homepage": "https://github.com/gaoyunch/react-native-qiyu#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.16.2",
