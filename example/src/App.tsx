@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Qiyu from 'react-native-qiyu';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result] = React.useState<number | undefined>();
 
-  React.useEffect(() => {
-    Qiyu.multiply(3, 7).then(setResult);
-  }, []);
+  React.useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>
