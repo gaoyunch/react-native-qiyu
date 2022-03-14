@@ -1,6 +1,6 @@
 {
   "name": "@gaoyunch/react-native-qiyu",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "react-native netease qiyu sdk",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
